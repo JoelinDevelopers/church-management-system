@@ -1,4 +1,4 @@
-name = "unmu-api"
+name = "church-management-api"
 main = "src/app.ts"
 compatibility_date = "2024-09-23"
 compatibility_flags = [ "nodejs_compat" ]

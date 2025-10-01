@@ -1,30 +1,12 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent } from "stoker/openapi/helpers";
 
 import { NotAuthorizedSchema } from "@/lib/constants";
-
-import {
-  ItemBriefSchema,
-  ItemsResponseSchema,
-  StatsResponseSchema,
-} from "./stats.schema";
-
-// UserId parameter schema for filtering by user
-export const UserIdParamSchema = z.object({
-  userId: z
-    .string()
-    .min(24)
-    .openapi({
-      param: {
-        name: "userId",
-        in: "path",
-      },
-      example: "00b4766213f0732810a29d8a",
-    }),
-});
+import { ItemsResponseSchema, StatsResponseSchema } from "./stats.schema";
 
 const tags = ["Stats"];
+
 export const list = createRoute({
   path: "/stats",
   method: "get",
@@ -37,16 +19,21 @@ export const list = createRoute({
     ),
   },
 });
+
 export const briefItems = createRoute({
   path: "/stats/brief-items",
   method: "get",
   tags,
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(
-      ItemsResponseSchema,
-      "Brief item Options"
+    [HttpStatusCodes.OK]: jsonContent(ItemsResponseSchema, "Brief item Options"),
+    [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
+      NotAuthorizedSchema,
+      "You need to be Authenticated to View Items"
     ),
   },
 });
+
+// Route types
 export type ListRoute = typeof list;
 export type BriefItemsRoute = typeof briefItems;
+

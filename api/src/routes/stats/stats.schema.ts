@@ -1,24 +1,16 @@
 import { z } from "zod";
 
-const ProductsPerCategorySchema = z.object({
+// Schema for stats
+export const ProductsPerCategorySchema = z.object({
   categoryId: z.string(),
   categoryName: z.string(),
   productCount: z.number().int().min(0),
 });
 
-const PriceStatsSchema = z.object({
+export const PriceStatsSchema = z.object({
   min: z.number().min(0),
   max: z.number().min(0),
   average: z.number().min(0),
-});
-export const ItemBriefSchema = z.object({
-  label: z.string(),
-  value: z.string(),
-});
-export const ItemsResponseSchema = z.object({
-  brandOptions: z.array(ItemBriefSchema),
-  productOptions: z.array(ItemBriefSchema),
-  categoryOptions: z.array(ItemBriefSchema),
 });
 
 export const StatsResponseSchema = z.object({
@@ -29,18 +21,28 @@ export const StatsResponseSchema = z.object({
   lastUpdated: z.string().datetime(),
 });
 
-// For error responses
+// Brief items schema
+export const ItemBriefSchema = z.object({
+  label: z.string(),
+  value: z.string(),
+});
+
+export const ItemsResponseSchema = z.object({
+  brandOptions: z.array(ItemBriefSchema),
+  productOptions: z.array(ItemBriefSchema),
+  categoryOptions: z.array(ItemBriefSchema),
+});
+
+// Error schema
 export const StatsErrorResponseSchema = z.object({
   error: z.string(),
 });
 
-// Combined response type for both success and error cases
-export const StatsApiResponseSchema = z.union([
-  StatsResponseSchema,
-  StatsErrorResponseSchema,
-]);
+// Combined API response types
+export const StatsApiResponseSchema = z.union([StatsResponseSchema, StatsErrorResponseSchema]);
 
-// TypeScript types (optional, but useful)
+// TypeScript types
 export type StatsResponse = z.infer<typeof StatsResponseSchema>;
+export type ItemsResponse = z.infer<typeof ItemsResponseSchema>;
 export type StatsErrorResponse = z.infer<typeof StatsErrorResponseSchema>;
 export type StatsApiResponse = z.infer<typeof StatsApiResponseSchema>;

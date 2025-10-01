@@ -4,7 +4,7 @@ import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { AppRouteHandler } from "@/lib/types";
 
-import prisma from "prisma/db";
+import { getPrisma } from "prisma/db";
 
 import type { BriefItemsRoute, ListRoute } from "./stats.routes";
 

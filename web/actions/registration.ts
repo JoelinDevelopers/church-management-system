@@ -1,7 +1,4 @@
 "use server";
-
-import { Step2FormData } from "@/app/(auth)/auth/register/components/steps/StepTwo";
-// import { PersonalInfoProfile } from "@/app/(user-dashboard)/user-dashboard/user-profile/components/tabs/personal";
 import { api, API_BASE_URL } from "@/config/axios";
 
 import axios from "axios";
@@ -159,82 +156,82 @@ export async function createMemberWithProfile(
 }
 
 // Server Action: Update Personal Info (Step 2)
-export async function updatePersonalInfo(
-  profileId: string,
-  data: Step2FormData
-) {
-  try {
-    const updatePayload = {
-      gender: data.gender,
-      dateOfBirth: data.dateOfBirth,
-      ninNumber: data.ninNumber,
-      homeAddress: data.homeAddress,
-      workplaceAddress: data.workplaceAddress,
-      district: data.district,
-    };
+// export async function updatePersonalInfo(
+//   profileId: string,
+//   data: Step2FormData
+// ) {
+//   try {
+//     const updatePayload = {
+//       gender: data.gender,
+//       dateOfBirth: data.dateOfBirth,
+//       ninNumber: data.ninNumber,
+//       homeAddress: data.homeAddress,
+//       workplaceAddress: data.workplaceAddress,
+//       district: data.district,
+//     };
 
-    console.log(
-      "Updating personal info for profile:",
-      profileId,
-      updatePayload
-    );
+//     console.log(
+//       "Updating personal info for profile:",
+//       profileId,
+//       updatePayload
+//     );
 
-    // Make API call to update profile
-    const response = await api.patch(`/members/${profileId}`, updatePayload);
+//     // Make API call to update profile
+//     const response = await api.patch(`/members/${profileId}`, updatePayload);
 
-    if (!response.data.success) {
-      return {
-        success: false,
-        error: response.data.message || "Failed to update personal information",
-      };
-    }
+//     if (!response.data.success) {
+//       return {
+//         success: false,
+//         error: response.data.message || "Failed to update personal information",
+//       };
+//     }
 
-    // Revalidate relevant paths
-    revalidatePath(`/auth/register/${profileId}`);
+//     // Revalidate relevant paths
+//     revalidatePath(`/auth/register/${profileId}`);
 
-    return {
-      success: true,
-      data: response.data.data,
-      message:
-        response.data.message || "Personal information updated successfully",
-    };
-  } catch (error) {
-    console.error("Update personal info error:", error);
+//     return {
+//       success: true,
+//       data: response.data.data,
+//       message:
+//         response.data.message || "Personal information updated successfully",
+//     };
+//   } catch (error) {
+//     console.error("Update personal info error:", error);
 
-    if (axios.isAxiosError(error)) {
-      const responseData = error.response?.data;
-      const statusCode = error.response?.status;
+//     if (axios.isAxiosError(error)) {
+//       const responseData = error.response?.data;
+//       const statusCode = error.response?.status;
 
-      if (statusCode === 404) {
-        return {
-          success: false,
-          error: "Profile not found. Please start registration again.",
-        };
-      }
+//       if (statusCode === 404) {
+//         return {
+//           success: false,
+//           error: "Profile not found. Please start registration again.",
+//         };
+//       }
 
-      if (statusCode === 400) {
-        return {
-          success: false,
-          error:
-            responseData?.message ||
-            "Invalid data provided. Please check all fields and try again.",
-        };
-      }
+//       if (statusCode === 400) {
+//         return {
+//           success: false,
+//           error:
+//             responseData?.message ||
+//             "Invalid data provided. Please check all fields and try again.",
+//         };
+//       }
 
-      return {
-        success: false,
-        error:
-          responseData?.message ||
-          "Failed to update personal information. Please try again.",
-      };
-    }
+//       return {
+//         success: false,
+//         error:
+//           responseData?.message ||
+//           "Failed to update personal information. Please try again.",
+//       };
+//     }
 
-    return {
-      success: false,
-      error: "Failed to update personal information. Please try again.",
-    };
-  }
-}
+//     return {
+//       success: false,
+//       error: "Failed to update personal information. Please try again.",
+//     };
+//   }
+// }
 
 // Server Action: Update Workplace Info (Step 3)
 export async function updateWorkplaceInfo(

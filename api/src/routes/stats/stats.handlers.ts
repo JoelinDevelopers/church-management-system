@@ -4,31 +4,24 @@ import * as HttpStatusCodes from "stoker/http-status-codes";
 
 import type { AppRouteHandler } from "@/lib/types";
 
-import { getPrisma } from "prisma/db";
+import { getPrisma } from "prisma/db";   // ✅ fixed import
 
 import type { BriefItemsRoute, ListRoute } from "./stats.routes";
 
 export const list: AppRouteHandler<ListRoute> = async (c) => {
-  // Calculate statistics
-  // const auth = getAuth(c);
+  const prisma = getPrisma(c.env.DATABASE_URL);  // ✅ use inside handler
 
-  // if (!auth?.userId) {
-  //   return c.json(
-  //     {
-  //       message: "You are not logged in.",
-  //     },
-  //     HttpStatusCodes.UNAUTHORIZED
-  //   );
-  // }
-  // Products per category
   const categories = await prisma.category.findMany({
     include: {
       products: true,
     },
   });
+
   const products = await prisma.product.findMany();
+
   const totalCategories = categories.length;
   const totalProducts = products.length;
+
   const productsPerCategory = categories.map((category) => ({
     categoryId: category.id,
     categoryName: category.name,
@@ -37,12 +30,10 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
     ).length,
   }));
 
-  // Price statistics
   const prices = products.map((product) => product.price);
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
-  const avgPrice =
-    prices.reduce((sum, price) => sum + price, 0) / prices.length;
+  const avgPrice = prices.reduce((sum, price) => sum + price, 0) / prices.length;
 
   const stats = {
     totalCategories,
@@ -55,46 +46,37 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
     },
     lastUpdated: new Date().toISOString(),
   };
+
   return c.json(stats, HttpStatusCodes.OK);
 };
+
 export const briefItems: AppRouteHandler<BriefItemsRoute> = async (c) => {
-  // Products per category
+  const prisma = getPrisma(c.env.DATABASE_URL);  // ✅ also here
+
   const categories = await prisma.category.findMany({
-    select: {
-      id: true,
-      name: true,
-    },
+    select: { id: true, name: true },
   });
   const brands = await prisma.brand.findMany({
-    select: {
-      id: true,
-      title: true,
-    },
+    select: { id: true, title: true },
   });
   const products = await prisma.product.findMany({
-    select: {
-      id: true,
-      name: true,
-    },
+    select: { id: true, name: true },
   });
-  const categoryOptions = categories.map((item) => {
-    return {
-      label: item.name,
-      value: item.id,
-    };
-  });
-  const brandOptions = brands.map((item) => {
-    return {
-      label: item.title,
-      value: item.id,
-    };
-  });
-  const productOptions = products.map((item) => {
-    return {
-      label: item.name,
-      value: item.id,
-    };
-  });
+
+  const categoryOptions = categories.map((item) => ({
+    label: item.name,
+    value: item.id,
+  }));
+
+  const brandOptions = brands.map((item) => ({
+    label: item.title,
+    value: item.id,
+  }));
+
+  const productOptions = products.map((item) => ({
+    label: item.name,
+    value: item.id,
+  }));
 
   return c.json(
     { productOptions, brandOptions, categoryOptions },

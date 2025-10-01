@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'USER');
+CREATE TYPE "UserRole" AS ENUM ('SUPER_ADMIN', 'ADMIN', 'USER');
 
 -- CreateEnum
 CREATE TYPE "GENDER" AS ENUM ('FEMALE', 'MALE');

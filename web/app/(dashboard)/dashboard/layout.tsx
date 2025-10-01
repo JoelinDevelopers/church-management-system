@@ -16,7 +16,7 @@ export default async function DashboardLayout({
   if (!user) {
     redirect("/auth/login");
   }
-  const isAdmin = user.role === "ADMIN";
+  const isAdmin = user.role === "SUPER_ADMIN";
   if (!isAdmin) {
     redirect("/user-dashboard");
   }

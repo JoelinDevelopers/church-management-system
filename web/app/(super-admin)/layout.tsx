@@ -2,12 +2,12 @@ import type React from "react";
 
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-
-import { redirect } from "next/navigation";
-import { AdminSidebar } from "../components/AdminDashboard";
 import { getServerUser } from "@/actions/auth";
+import { redirect } from "next/navigation";
+import { User } from "lucide-react";
+import { SuperAdminSidebar } from "./super-admin/components/SuperAdminSidebar";
 
-export default async function DashboardLayout({
+export default async function UserDashboardLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -16,13 +16,9 @@ export default async function DashboardLayout({
   if (!user) {
     redirect("/auth/login");
   }
-  const isSuperAdmin = user.role === "SUPER_ADMIN";
-  if (isSuperAdmin) {
-    redirect("/super-admin");
-  }
   return (
     <SidebarProvider>
-      <AdminSidebar user={user} variant="inset" />
+      <SuperAdminSidebar variant="inset" />
       <SidebarInset>
         <SiteHeader user={user} />
         <div className="flex flex-1 flex-col">

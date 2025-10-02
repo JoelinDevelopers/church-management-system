@@ -19,3 +19,21 @@ const baseApi = axios.create({
 });
 
 export { baseApi as api };
+
+export async function apiRequest(endpoint:string) {
+ const response = await fetch(`${API_BASE_URL}/api/$
+  {endpoint}`, {
+    cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `API request failed: ${response.status} ${response.statusText}`
+    );
+  }
+
+  return response.json();
+}

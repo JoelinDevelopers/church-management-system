@@ -80,7 +80,7 @@ export interface UserDetail {
   phone: string;
   email: string;
   image: string;
-  role: "MEMBER" | "ADMIN";
+  role: "MEMBER" | "ADMIN" | "SUPER_ADMIN";
   status: "ACTIVE" | "INACTIVE" | "SUSPENDED" | "PENDING";
   isVerified: boolean;
   token: string | null;

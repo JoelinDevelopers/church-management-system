@@ -36,11 +36,11 @@ enum UserStatus {
 // Core User Model - Essential authentication and basic info
 model Church {
   id          String     @id @default(cuid())
-  name        String
-  subdomain   String @unique
+  name        String     
+  subdomain   String     @unique
   users       User[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
    
   @@map("churches")
 }

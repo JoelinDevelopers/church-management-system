@@ -1,271 +1,202 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import Link from "next/link"
 import {
-  Instagram,
-  Linkedin,
-  Twitter,
-  Youtube,
-  Phone,
-  Mail,
-  MapPin,
+  Church,
   Heart,
+  Mail,
+  Phone,
+  MapPin,
+  Twitter,
+  Facebook,
+  Instagram,
+  Youtube,
   Users,
   Database,
-  FileText,
+  BookOpen,
   Shield,
-} from 'lucide-react';
-import Link from 'next/link';
-import MainLogo from './main-logo';
+  ArrowRight,
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 export default function SiteFooter() {
   return (
-    <footer className="w-full bg-gradient-to-br from-red-900 via-red-800 to-red-900 text-white">
+    <footer className="w-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white">
       <div className="container max-w-7xl mx-auto px-4 py-12 md:px-6">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {/* UNMU Brand Section */}
           <div className="space-y-4">
-            <MainLogo
-              src="/images/unmu-logo.png"
-              alt="UNMU - Uganda Nurses and Midwives Union"
-              width={50}
-              height={50}
-              showText={true}
-              text="UNMU"
-              variant="default"
-            />
-            <p className="text-sm text-white/90 leading-relaxed">
-              Empowering Uganda's healthcare heroes through comprehensive member
-              management and professional development. Building a stronger
-              healthcare workforce together.
+            <div className="flex items-center space-x-2">
+              <Church className="h-8 w-8" />
+              <span className="text-xl font-semibold">ParishPro</span>
+            </div>
+            <p className="text-sm text-blue-100 leading-relaxed">
+              Empowering parishes worldwide through comprehensive management systems to organize records, track
+              sacraments, and strengthen community connections.
             </p>
-            <div className="flex items-center space-x-2 text-yellow-300">
+            <div className="flex items-center space-x-2 text-blue-200">
               <Heart className="h-4 w-4" />
-              <span className="text-sm font-medium italic">
-                "To Love and Serve"
-              </span>
+              <span className="text-sm font-medium italic">"Serving God's People"</span>
             </div>
             <div className="flex space-x-3">
-              <Link
-                href="https://twitter.com/unmu_uganda"
-                className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors duration-200"
-              >
-                <Twitter className="h-4 w-4 text-white" />
+              <Link href="#" className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors duration-200">
+                <Twitter className="h-4 w-4" />
                 <span className="sr-only">Twitter</span>
               </Link>
-              <Link
-                href="https://www.linkedin.com/company/unmu-uganda"
-                className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors duration-200"
-              >
-                <Linkedin className="h-4 w-4 text-white" />
-                <span className="sr-only">LinkedIn</span>
+              <Link href="#" className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors duration-200">
+                <Facebook className="h-4 w-4" />
+                <span className="sr-only">Facebook</span>
               </Link>
-              <Link
-                href="https://www.instagram.com/unmu_uganda"
-                className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors duration-200"
-              >
-                <Instagram className="h-4 w-4 text-white" />
+              <Link href="#" className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors duration-200">
+                <Instagram className="h-4 w-4" />
                 <span className="sr-only">Instagram</span>
               </Link>
-              <Link
-                href="https://www.youtube.com/@unmu-uganda"
-                className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors duration-200"
-              >
-                <Youtube className="h-4 w-4 text-white" />
+              <Link href="#" className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors duration-200">
+                <Youtube className="h-4 w-4" />
                 <span className="sr-only">YouTube</span>
               </Link>
             </div>
           </div>
 
-          {/* Contact Information */}
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-yellow-300">Get In Touch</h3>
+            <h3 className="text-lg font-bold">Get In Touch</h3>
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-yellow-300 flex-shrink-0" />
-                <span>info@unmu.or.ug</span>
+                <Mail className="h-4 w-4 flex-shrink-0" />
+                <span>support@parishpro.com</span>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-yellow-300 flex-shrink-0" />
-                <span>+256 414 230 300</span>
+                <Phone className="h-4 w-4 flex-shrink-0" />
+                <span>+1 (555) 123-4567</span>
               </div>
               <div className="flex items-start space-x-3">
-                <MapPin className="h-4 w-4 text-yellow-300 flex-shrink-0 mt-0.5" />
+                <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
                 <span className="leading-relaxed">
-                  UNMU House, Plot 15A,
+                  123 Church Street,
                   <br />
-                  Acacia Avenue, Kololo,
+                  Vatican City,
                   <br />
-                  Kampala, Uganda
+                  VC 00120
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Quick Links - Healthcare Focused */}
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-2">
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-yellow-300">Quick Links</h3>
+              <h3 className="text-lg font-bold">Quick Links</h3>
               <nav className="flex flex-col space-y-2 text-sm">
-                <Link
-                  className="hover:text-yellow-300 transition-colors duration-200 flex items-center space-x-2"
-                  href="/"
-                >
-                  <span>Home</span>
+                <Link className="hover:text-blue-200 transition-colors duration-200" href="#">
+                  Home
                 </Link>
                 <Link
-                  className="hover:text-yellow-300 transition-colors duration-200 flex items-center space-x-2"
-                  href="/auth/register"
+                  className="hover:text-blue-200 transition-colors duration-200 flex items-center space-x-2"
+                  href="#"
                 >
                   <Users className="h-3 w-3" />
-                  <span>New Member</span>
+                  <span>Features</span>
                 </Link>
                 <Link
-                  className="hover:text-yellow-300 transition-colors duration-200 flex items-center space-x-2"
-                  href="/auth/admin/register"
+                  className="hover:text-blue-200 transition-colors duration-200 flex items-center space-x-2"
+                  href="#"
                 >
                   <Database className="h-3 w-3" />
-                  <span>New Admin</span>
+                  <span>Pricing</span>
                 </Link>
                 <Link
-                  className="hover:text-yellow-300 transition-colors duration-200 flex items-center space-x-2"
-                  href="/reports"
+                  className="hover:text-blue-200 transition-colors duration-200 flex items-center space-x-2"
+                  href="#"
                 >
-                  <FileText className="h-3 w-3" />
-                  <span>Reports</span>
+                  <BookOpen className="h-3 w-3" />
+                  <span>Resources</span>
                 </Link>
               </nav>
             </div>
             <div className="space-y-4">
               <h3 className="text-lg font-bold invisible">Links</h3>
               <nav className="flex flex-col space-y-2 text-sm">
-                <Link
-                  className="hover:text-yellow-300 transition-colors duration-200"
-                  href="/about"
-                >
-                  About UNMU
+                <Link className="hover:text-blue-200 transition-colors duration-200" href="#">
+                  About Us
+                </Link>
+                <Link className="hover:text-blue-200 transition-colors duration-200" href="#">
+                  Blog
+                </Link>
+                <Link className="hover:text-blue-200 transition-colors duration-200" href="#">
+                  Contact
                 </Link>
                 <Link
-                  className="hover:text-yellow-300 transition-colors duration-200"
-                  href="/careers"
-                >
-                  Careers
-                </Link>
-                <Link
-                  className="hover:text-yellow-300 transition-colors duration-200"
-                  href="/contact"
-                >
-                  Contact Us
-                </Link>
-                <Link
-                  className="hover:text-yellow-300 transition-colors duration-200 flex items-center space-x-2"
-                  href="/privacy"
+                  className="hover:text-blue-200 transition-colors duration-200 flex items-center space-x-2"
+                  href="#"
                 >
                   <Shield className="h-3 w-3" />
-                  <span>Privacy Policy</span>
+                  <span>Privacy</span>
                 </Link>
               </nav>
             </div>
           </div>
 
-          {/* Newsletter/Updates Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-yellow-300">Stay Updated</h3>
-            <p className="text-sm text-white/80">
-              Get the latest updates on healthcare policies, member benefits,
-              and professional development opportunities.
+            <h3 className="text-lg font-bold">Stay Updated</h3>
+            <p className="text-sm text-blue-100">
+              Get the latest updates on features, best practices, and parish management tips.
             </p>
             <form className="space-y-3">
               <Input
-                className="bg-white/10 border-white/20 placeholder:text-white/50 focus:border-yellow-300 focus:ring-yellow-300"
-                placeholder="Enter your email address"
+                className="bg-white/10 border-white/20 placeholder:text-blue-200 focus:border-white/40 text-white"
+                placeholder="Enter your email"
                 type="email"
               />
               <Button
-                className="w-full bg-yellow-500 text-red-900 hover:bg-yellow-400 font-medium transition-colors duration-200"
+                className="w-full bg-white text-blue-900 hover:bg-blue-50 font-medium transition-colors duration-200"
                 type="submit"
               >
-                Subscribe to Updates
-                <svg
-                  className="ml-2 h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+                Subscribe
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </form>
           </div>
         </div>
 
-        {/* Additional UNMU Info Section */}
         <div className="mt-12 pt-8 border-t border-white/10">
           <div className="grid gap-6 md:grid-cols-3">
             <div className="text-center md:text-left">
-              <h4 className="font-semibold text-yellow-300 mb-2">
-                Professional Development
-              </h4>
-              <p className="text-sm text-white/80">
-                Continuing education and certification programs for healthcare
-                professionals.
+              <h4 className="font-semibold mb-2">Parish Support</h4>
+              <p className="text-sm text-blue-100">
+                Dedicated support team available 24/7 to help your parish succeed.
               </p>
             </div>
             <div className="text-center md:text-left">
-              <h4 className="font-semibold text-yellow-300 mb-2">
-                Member Support
-              </h4>
-              <p className="text-sm text-white/80">
-                24/7 support for UNMU members with advocacy and professional
-                guidance.
+              <h4 className="font-semibold mb-2">Secure & Reliable</h4>
+              <p className="text-sm text-blue-100">
+                Bank-level encryption with 99.9% uptime guarantee for your peace of mind.
               </p>
             </div>
             <div className="text-center md:text-left">
-              <h4 className="font-semibold text-yellow-300 mb-2">
-                Healthcare Network
-              </h4>
-              <p className="text-sm text-white/80">
-                Connecting nurses and midwives across Uganda's healthcare
-                system.
+              <h4 className="font-semibold mb-2">Global Network</h4>
+              <p className="text-sm text-blue-100">
+                Connecting parishes across 50+ countries with modern management tools.
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Footer Bottom */}
-      <div className="border-t border-white/10 bg-red-950/50">
+      <div className="border-t border-white/10 bg-blue-950/50">
         <div className="container flex flex-col items-center justify-between gap-4 py-6 text-center text-sm md:h-16 md:flex-row md:py-0">
-          <div className="text-white/60">
-            Copyright © {new Date().getFullYear()} Uganda Nurses and Midwives
-            Union (UNMU). All Rights Reserved.
-          </div>
-          <div className="flex items-center space-x-4 text-white/60">
-            <Link
-              href="/terms"
-              className="hover:text-yellow-300 transition-colors"
-            >
+          <div className="text-blue-200">Copyright © {new Date().getFullYear()} ParishPro. All Rights Reserved.</div>
+          <div className="flex items-center space-x-4 text-blue-200">
+            <Link href="#" className="hover:text-white transition-colors">
               Terms of Service
             </Link>
             <span>•</span>
-            <Link
-              href="/privacy"
-              className="hover:text-yellow-300 transition-colors"
-            >
+            <Link href="#" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>
             <span>•</span>
-            <Link
-              href="/accessibility"
-              className="hover:text-yellow-300 transition-colors"
-            >
+            <Link href="#" className="hover:text-white transition-colors">
               Accessibility
             </Link>
           </div>
         </div>
       </div>
     </footer>
-  );
+  )
 }

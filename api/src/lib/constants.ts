@@ -37,3 +37,7 @@ export const IdParamSchema = z.object({
     example: "clx123abc"
   })
 });
+
+export const DomainParamSchema = z.object({
+  subdomain: z.string()
+});

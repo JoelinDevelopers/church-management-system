@@ -1,18 +1,49 @@
-import { apiRequest } from '@/config/axios';
+import { api } from '@/config/axios';
+import { BaseChurchTypes, ChurchBrief } from '@/types/church.schema';
 
 
 
-type SubdomainData = {
-  emoji: string;
-  createdAt: number;
-};
+export async function getSubdomainData(
+  subdomain: string
+):Promise<ChurchBrief | null> {
+  try {
+    const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
+    const response = await api.get(`/churches/domains/${sanitizedSubdomain}`);
+     
+    return response.data;
+  } catch (error: any) {
+     if (error.response?.status === 404) {
+      return null;
+     }
 
-export async function getSubdomainData(subdomain: string) {
-  const sanitizedSubdomain = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
-  console.log(sanitizedSubdomain);
-  const data = await apiRequest(`/churches/${sanitizedSubdomain}`);
-  console.log(sanitizedSubdomain);
-  return data;
+     if (error.response?.status === 400) {
+      console.error("Invalid subdomain format:", subdomain);
+      return null;
+     }
+
+     console.error("Error fetching subdomain data:", error);
+      return null;
+  }
+}
+
+export async function getAllChurches():Promise<BaseChurchTypes []> {
+  try {
+    const response = await api.get(`/churches`);
+     
+    return response.data;
+  } catch (error: any) {
+     if (error.response?.status === 404) {
+      return [];
+     }
+
+     if (error.response?.status === 400) {
+      console.error("Invalid subdomain format:");
+      return [];
+     }
+
+     console.error("Error fetching subdomain data:", error);
+      return [];
+  }
 }
 
 // export async function getAllSubdomains() {

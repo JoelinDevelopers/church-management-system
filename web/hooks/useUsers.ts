@@ -46,19 +46,6 @@ export function useUsersData(pagination: PaginationParams = {}) {
     gcTime: 10 * 60 * 1000,
   });
 
-  // const createUserQuery = useMutation({
-  //   mutationFn: (data: CreateUser) => usersDataServices.createUser(data),
-  //   onSuccess: () => {
-  //     toast.success("User created successfully");
-  //     queryClient.invalidateQueries({ queryKey: usersKeys.all });
-  //   },
-  //   onError: (error: Error) => {
-  //     toast.error("Failed to add user", {
-  //       description: error.message || "Unknown error occurred",
-  //     });
-  //   },
-  // });
-  // console.log(data?.data);
   return {
     isLoading,
     refetch,
@@ -67,8 +54,6 @@ export function useUsersData(pagination: PaginationParams = {}) {
     totalCount: data?.data?.pagination.total || 0,
     totalPages: data?.data?.pagination.totalPages || 0,
     currentPage: data?.data?.pagination.page || 1,
-    // createUser: createUserQuery.mutateAsync,
-    // isCreating: createUserQuery.isPending,
   };
 }
 

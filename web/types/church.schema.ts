@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const ChurchBaseSchema = z.object({
   id: z.string(),
-  title: z.string().min(1, "Church title is required").max(
+  name: z.string().min(1, "Church title is required").max(
     100, "Title is too long"
   ),       
   subdomain: z.string().min(1, "Subdomain is required").max(
@@ -20,6 +20,9 @@ export const churchFormSchema = ChurchBaseSchema.omit({
   updatedAt: true,  
 });
 
-export type ChurchFormData = z.infer<typeof churchFormSchema>
+
+export type ChurchFormData = z.infer<typeof churchFormSchema>;
+
+export type ChurchBrief = ChurchFormData;
 
 export type BaseChurchTypes = z.infer<typeof ChurchBaseSchema>;

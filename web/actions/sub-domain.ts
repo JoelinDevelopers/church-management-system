@@ -7,20 +7,23 @@ import { churchFormSchema } from '@/types/church.schema';
 import z from 'zod';
 
 export async function createSubdomainAction(data: {
-  title: string;
+  name: string;
   subdomain: string;
 }) {
   try {
     // Validate with zod
     const validatedData = churchFormSchema.parse(data);
 
-    const response = await api.post('/churches', {
-      name: validatedData.title,
+    await api.post('/churches', {
+      name: validatedData.name,
       subdomain: validatedData.subdomain,
     });
 
     // Return success data for API call
-      redirect (`${protocol}://${validatedData.subdomain}.${rootDomain}`);
+      return {
+        success: true,
+        redirectUrl: `${protocol}://${validatedData.subdomain}.${rootDomain}`,
+      }
     
   } catch (error: any) {
     //ZOD ERRORS
@@ -72,4 +75,28 @@ export async function createSubdomainAction(data: {
 
      
   
+}
+
+export async function deleteChurchAction(churchId: string) {
+  try {
+     await api.delete(`/churches/${churchId}`);
+     revalidatePath("/churches");
+     return {success: true, message: "Church Deleted Successfully"}
+  } catch (error: any) {
+    console.error('Error deleting church:', error);
+    
+    if (error.response?.status === 404) {
+      return { success: false, error: "Church not found"};
+    }
+
+    if (error.response?.status === 403) {
+      return { success: false, error: "You don't have permission to delete this church"};
+    }
+
+    if (error.response?.data?.error) {
+      return { success: false, error: error.response.data.error};
+    }
+
+    return {success: false, error: "Failed to delete church. Please try again."}
+  }
 }

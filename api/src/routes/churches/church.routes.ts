@@ -2,7 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
 import { ChurchBaseSchema, ChurchCreateSchema } from "./church.schema";
-import { ErrorResponseSchema, IdParamSchema, SuccessResponseSchema,  } from "@/lib/constants";
+import { DomainParamSchema, ErrorResponseSchema, IdParamSchema, SuccessResponseSchema,  } from "@/lib/constants";
 
 
 const tags = ["Church"]
@@ -87,8 +87,34 @@ export const deleteChurch = createRoute({
   }
 });
 
+export const getChurchBySubDomain = createRoute({
+  path: "/churches/domains/{subdomain}",
+  method: "get",
+  tags,
+  summary: "Get Church",
+  description: "Retrieve Church List",
+  request: {
+    params: DomainParamSchema
+  },
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      ChurchCreateSchema,
+      "The Church"
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      ErrorResponseSchema,
+      "Church not found"
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      ErrorResponseSchema,
+      "Internal server error"
+    )
+  }
+});
+
 
 
 export type CreateChurchRoute = typeof createChurch;
 export type ListChurchesRoute = typeof listChurches;
 export type DeleteChurchRoute = typeof deleteChurch;
+export type GetChurchBySubDomain = typeof getChurchBySubDomain;

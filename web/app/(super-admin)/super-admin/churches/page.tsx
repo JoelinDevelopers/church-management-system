@@ -1,33 +1,41 @@
-import Link from 'next/link';
-import { rootDomain } from '@/lib/utils';
-import { SubdomainForm } from '../components/SubDomainForm';
+import { Metadata } from "next";
+import { Suspense } from "react";
+import { ChurchList } from "../components/ChurchListing";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
-export default async function HomePage() {
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white p-4 relative">
-      <div className="absolute top-4 right-4">
-        <Link
-          href="/admin"
-          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-        >
-          Admin
-        </Link>
-      </div>
 
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-            {rootDomain}
-          </h1>
-          <p className="mt-3 text-lg text-gray-600">
-            Create your own subdomain with a custom emoji
-          </p>
+
+export const metadata: Metadata = {
+  title: "Churches - Church Management",
+  description: "View and manage all registered churches",
+};
+
+function ChurchListFallback() {
+  return(
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {Array.from({length: 6}).map((_, index) =>(
+        <div key={index} className="p-6 border rounded-lg animate-pulse">
+          <div className="h-6 bg-gray-200 rounded-3/4 mb-4"></div>
+          <div className="space-y-3">
+            <div className="h-4 bg-gray-200 rounded"></div>
+            <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+          </div>
         </div>
-
-        <div className="mt-8 bg-white shadow-md rounded-lg p-6">
-          <SubdomainForm />
-        </div>
-      </div>
+      ))}
     </div>
   );
+}
+
+export default function ChurchesPage() {
+  return (
+    <div className="container max-w-5xl mx-auto p-8">
+       
+      <Suspense fallback={<ChurchListFallback />}>
+        <ChurchList/>
+      </Suspense>
+    </div>
+  ); 
 }

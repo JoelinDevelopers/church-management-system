@@ -56,7 +56,7 @@ export async function createServerSession(
     // Set tokens first
     cookieStore.set("accessToken", loginData.accessToken, {
       ...cookieOptions,
-      maxAge: 24 * 60 * 60, //24hrs
+      maxAge: 1 * 24 * 60 * 60, //24hrs
     });
 
     cookieStore.set("refreshToken", loginData.refreshToken, {
@@ -82,7 +82,7 @@ export async function createServerSession(
     // Set user cookie
     cookieStore.set("user", JSON.stringify(safeUserData), {
       ...cookieOptions,
-      maxAge: 24 * 60 * 60, // 24h
+      maxAge: 1 * 24 * 60 * 60, // 24h
     });
 
     console.log("Session created successfully for user:", loginData.user.email);
@@ -191,7 +191,7 @@ export async function refreshTokens(): Promise<{
 
     cookieStore.set("accessToken", result.accessToken, {
       ...cookieOptions,
-      maxAge: 15 * 60,
+      maxAge: 1 * 24 * 60 * 60,
     });
     cookieStore.set("refreshToken", result.refreshToken, {
       ...cookieOptions,

@@ -9,6 +9,8 @@ import { rootDomain } from '@/lib/utils';
 import { churchFormSchema, type ChurchFormData } from '@/types/church.schema';
 import { useCreateChurch } from '@/hooks/use-church';
 import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 // Create a client-side function to call the server action
  function SubdomainInput({
@@ -72,12 +74,13 @@ export function SubdomainForm() {
   } = useForm<ChurchFormData>({
     resolver: zodResolver(churchFormSchema),
     defaultValues: {
-      title: '',
+      name: '',
       subdomain: '',
     },
   });
 
   const createChurchMutation = useCreateChurch();
+  const router = useRouter();
 
   const onSubmit = async (data: ChurchFormData) => {
     clearErrors("root");
@@ -85,6 +88,9 @@ export function SubdomainForm() {
       const result = await createChurchMutation.mutateAsync(data);
       if (result && !result.success) {
         setError("root", {message: result.error});
+      } else {
+        toast.success("Church Created Successfully")
+        router.push("/super-admin/churches");
       }
     } catch (error: any) {
       if(error.error){
@@ -107,10 +113,10 @@ export function SubdomainForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <TitleInput
-        {...register('title', {
-          onChange: () => clearFieldError("title")
+        {...register('name', {
+          onChange: () => clearFieldError("name")
         })}
-        error={errors.title?.message}
+        error={errors.name?.message}
         placeholder="Your church title"
       />
       

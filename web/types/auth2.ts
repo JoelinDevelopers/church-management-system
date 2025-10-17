@@ -1,12 +1,14 @@
 import { CurrentLevel } from "./login";
 
 // types/auth2.ts
+
+export type Role = "USER" | "ADMIN" | "SUPER_ADMIN";
 export interface User {
   id: string;
   name: string;
   email: string;
   phone: string;
-  role: "MEMBER" | "ADMIN" | "SUPER_ADMIN";
+  role: Role;
   status: "ACTIVE" | "INACTIVE" | "SUSPENDED" | "PENDING";
   isVerified: boolean;
   image: string | null;

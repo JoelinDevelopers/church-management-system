@@ -91,7 +91,7 @@ export default function SystemRequestForm() {
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Request Parish Access</h2>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-black">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="block text-sm font-medium text-gray-900">Country *</label>

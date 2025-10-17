@@ -5,6 +5,11 @@ import { notFound } from 'next/navigation';
 import { getSubdomainData } from '@/lib/subdomains';
 import { protocol, rootDomain } from '@/lib/utils';
 import SubdomainContent from '../components/sub-domain-page';
+import HeroCarousel from '../components/landing-page/HeroCarousel';
+import Header from '../components/landing-page/Header';
+import Services from '../components/landing-page/Services';
+import Events from '../components/landing-page/Events';
+import ContactSection from '../components/landing-page/ContactSection';
 
 export async function generateMetadata({
   params
@@ -37,7 +42,15 @@ export default async function SubdomainPage({
   if (!subdomainData) {
     notFound();
   }
-
+    // <SubdomainContent subdomain={subdomain} initialData={subdomainData} />;
   // Pass the initial data and subdomain to the client component
-  return <SubdomainContent subdomain={subdomain} initialData={subdomainData} />;
+  return (
+    <div className="">
+      <Header />
+      <HeroCarousel />
+      <Services />
+      <Events />
+      <ContactSection />
+    </div>
+  )
 }

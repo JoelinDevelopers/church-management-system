@@ -1,8 +1,9 @@
 import { getServerUser } from "@/actions/auth";
+import Navbar from "@/app/(super-admin)/super-admin/components/Navbar";
+import Sidebar from "@/app/(super-admin)/super-admin/components/Sidebar";
 import { redirect } from "next/navigation";
 import React, { ReactNode } from "react";
-import Navbar from "./super-admin/components/Navbar";
-import Sidebar from "./super-admin/components/Sidebar";
+ 
 
 export default async function DashboardLayout({
   children,

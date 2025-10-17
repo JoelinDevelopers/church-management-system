@@ -22,7 +22,7 @@ export default function SiteFooter() {
   return (
     <footer className="w-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white">
       <div className="container max-w-7xl mx-auto px-4 py-12 md:px-6">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {/* <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <Church className="h-8 w-8" />
@@ -153,7 +153,7 @@ export default function SiteFooter() {
               </Button>
             </form>
           </div>
-        </div>
+        </div> */}
 
         <div className="mt-12 pt-8 border-t border-white/10">
           <div className="grid gap-6 md:grid-cols-3">
@@ -170,9 +170,9 @@ export default function SiteFooter() {
               </p>
             </div>
             <div className="text-center md:text-left">
-              <h4 className="font-semibold mb-2">Global Network</h4>
+              <h4 className="font-semibold mb-2">Login</h4>
               <p className="text-sm text-blue-100">
-                Connecting parishes across 50+ countries with modern management tools.
+                Admin Login Area <Link href={"/auth/login"} className="font-bold text-yellow-300">Login here</Link>
               </p>
             </div>
           </div>

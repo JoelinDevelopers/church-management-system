@@ -53,10 +53,9 @@ export default function MainLogo({
       case "text-only":
         return (
           <div className="flex flex-col items-center">
-            <span className="font-bold text-xl text-red-600">Logo</span>
+            <span className="font-bold text-xl text-red-600">Tabernacle</span>
             <span className="text-xs text-gray-600 text-center leading-tight">
-              My Logo &<br />
-              Goes Here
+              Go Ye And Make Disciples
             </span>
           </div>
         );

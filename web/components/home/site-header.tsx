@@ -55,7 +55,7 @@ export default function SiteHeader() {
             height={40}
             showText={true}
             text="UNMU"
-            variant="compact"
+            variant="text-only"
           />
 
           <nav className="flex flex-1 justify-center">

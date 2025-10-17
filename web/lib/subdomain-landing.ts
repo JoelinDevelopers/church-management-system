@@ -46,6 +46,23 @@ export type ContactData = {
   details: string | null;
 }
 
+export type WisdomData = {
+  id: number;
+  quote: string;
+  author: string;
+  role: string;
+  image: string;
+}
+
+export type MinistryData = {
+  id: number;
+  icon: string;
+  title: string;
+  description: string;
+  image: string;
+  color: string;
+}
+
 export async function getHeaderData():Promise<HeaderData | null> {
   try {
     // const response = await api.get(`/church/landing/header`);
@@ -115,13 +132,13 @@ export async function getHeroCarouselData(): Promise<CarouselData []> {
   }
 }
 
-export async function getServicesData(): Promise<ServicesData []> {
+
+export async function getServicesData(): Promise<ServicesData[]> {
   try {
     // const response = await api.get(`/church/landing/carousel`);
     // return response.data;
     
-     
-     const data = [
+    const data = [
       {
         id: "sunday-service",
         icon: "sunday-service",
@@ -170,20 +187,69 @@ export async function getServicesData(): Promise<ServicesData []> {
         time: "Saturdays 4:00 PM",
         color: "text-chart-5",
       },
+      // Additional programs to demonstrate the "View All" functionality
+      {
+        id: "mens-ministry",
+        icon: "sunday-service", // Using existing icon as fallback
+        title: "Men's Ministry",
+        description: "Brotherhood and discipleship for men seeking to grow in their faith and leadership.",
+        time: "1st Saturday 8:00 AM",
+        color: "text-primary",
+      },
+      {
+        id: "womens-ministry",
+        icon: "prayer-meeting", // Using existing icon as fallback
+        title: "Women's Ministry",
+        description: "Encouraging fellowship and spiritual growth for women of all ages and stages.",
+        time: "2nd Saturday 10:00 AM",
+        color: "text-accent",
+      },
+      {
+        id: "young-adults",
+        icon: "youth-fellowship", // Using existing icon as fallback
+        title: "Young Adults",
+        description: "Community and discipleship for young adults navigating life, career, and faith.",
+        time: "Thursdays 7:30 PM",
+        color: "text-chart-5",
+      },
+      {
+        id: "seniors-fellowship",
+        icon: "bible-study", // Using existing icon as fallback
+        title: "Seniors Fellowship",
+        description: "Warm community and spiritual encouragement for our senior members.",
+        time: "Tuesdays 10:00 AM",
+        color: "text-primary",
+      },
+      {
+        id: "marriage-enrichment",
+        icon: "prayer-meeting", // Using existing icon as fallback
+        title: "Marriage Enrichment",
+        description: "Strengthen your marriage through biblical principles and couple fellowship.",
+        time: "Monthly Workshops",
+        color: "text-accent",
+      },
+      {
+        id: "community-outreach",
+        icon: "sunday-service", // Using existing icon as fallback
+        title: "Community Outreach",
+        description: "Serving our local community through various outreach programs and events.",
+        time: "Various Times",
+        color: "text-chart-5",
+      }
     ];
     return data;
   } catch (error: any) {
     if (error.response?.status === 404) {
       return [];
-     }
+    }
 
-     if (error.response?.status === 400) {
+    if (error.response?.status === 400) {
       console.error("Invalid subdomain format:");
       return [];
-     }
+    }
 
-     console.error("Error fetching subdomain data:", error);
-      return [];
+    console.error("Error fetching subdomain data:", error);
+    return [];
   }
 }
 
@@ -199,7 +265,7 @@ export async function getEventsData(): Promise<EventData[]> {
         date: "March 15-17, 2025",
         time: "9:00 AM - 5:00 PM",
         location: "Main Sanctuary",
-        image: "/church-conference-stage-lights.jpg",
+        image: "/subdomain-images/church-conference-stage-lights.jpg",
         category: "Conference",
         description:
           "Three days of powerful teachings, worship, and fellowship with renowned speakers from around the world.",
@@ -211,7 +277,7 @@ export async function getEventsData(): Promise<EventData[]> {
         date: "February 28, 2025",
         time: "10:00 AM - 4:00 PM",
         location: "City Center Park",
-        image: "/community-service-volunteers-helping.jpg",
+        image: "/subdomain-images/community-service-volunteers-helping.jpg",
         category: "Outreach",
         description: "Join us as we serve our community with free meals, health screenings, and prayer.",
         featured: false,
@@ -222,7 +288,7 @@ export async function getEventsData(): Promise<EventData[]> {
         date: "March 8, 2025",
         time: "6:00 PM - 9:00 PM",
         location: "Youth Center",
-        image: "/youth-worship-concert-energetic.jpg",
+        image: "/subdomain-images/youth-worship-concert-energetic.jpg",
         category: "Youth",
         description: "An electrifying night of worship, testimonies, and powerful messages for the next generation.",
         featured: false,
@@ -233,7 +299,7 @@ export async function getEventsData(): Promise<EventData[]> {
         date: "March 22, 2025",
         time: "2:00 PM - 6:00 PM",
         location: "Fellowship Hall",
-        image: "/couple-happy-together-love.jpg",
+        image: "/subdomain-images/couple-happy-together-love.jpg",
         category: "Seminar",
         description: "Strengthen your marriage with biblical principles and practical tools for lasting love.",
         featured: false,
@@ -244,7 +310,7 @@ export async function getEventsData(): Promise<EventData[]> {
         date: "April 20, 2025",
         time: "7:00 AM & 10:00 AM",
         location: "Main Sanctuary",
-        image: "/easter-sunrise-cross-celebration.jpg",
+        image: "/subdomain-images/easter-sunrise-cross-celebration.jpg",
         category: "Special Service",
         description: "Celebrate the resurrection of Jesus Christ with special music, drama, and a powerful message.",
         featured: true,
@@ -255,7 +321,7 @@ export async function getEventsData(): Promise<EventData[]> {
         date: "March 1, 2025",
         time: "8:00 AM - 11:00 AM",
         location: "Fellowship Hall",
-        image: "/women-praying-together-fellowship.jpg",
+        image: "/subdomain-images/women-praying-together-fellowship.jpg",
         category: "Women",
         description: "A morning of prayer, worship, and encouragement for women of all ages.",
         featured: false,
@@ -337,6 +403,140 @@ export async function getContactData(): Promise<ContactData []> {
   }
 }
 
+export async function getWisdomData(): Promise<WisdomData[]> {
+  try {
+    // const response = await api.get(`/church/landing/wisdom`);
+    // return response.data;
+    
+    const data: WisdomData[] = [
+      {
+        id: 1,
+        quote: "Faith is not about everything turning out okay. Faith is about being okay no matter how things turn out.",
+        author: "Pastor John Smith",
+        role: "Senior Pastor",
+        image: "/subdomain-images/pastor-man-smiling-professional.jpg",
+      },
+      {
+        id: 2,
+        quote:
+          "Prayer is not asking. Prayer is putting oneself in the hands of God, at His disposition, and listening to His voice in the depth of our hearts.",
+        author: "Rev. Sarah Johnson",
+        role: "Associate Pastor",
+        image: "/subdomain-images/woman-pastor-professional-smiling.jpg",
+      },
+      {
+        id: 3,
+        quote:
+          "The greatest act of faith is when a man understands he is not God. True worship begins when we recognize His sovereignty.",
+        author: "Elder Michael Brown",
+        role: "Church Elder",
+        image: "/subdomain-images/elder-man-wise-professional.jpg",
+      },
+      {
+        id: 4,
+        quote:
+          "God's love doesn't seek value, it creates value. It is not because we have value that we are loved, but because we are loved that we have value.",
+        author: "Minister Grace Williams",
+        role: "Youth Pastor",
+        image: "/subdomain-images/woman-minister-young-professional.jpg",
+      },
+    ];
+    
+    return data;
+    
+  } catch (error: any) {
+    if (error.response?.status === 404) {
+      return [];
+    }
+
+    if (error.response?.status === 400) {
+      console.error("Invalid subdomain format:");
+      return [];
+    }
+
+    console.error("Error fetching wisdom data:", error);
+    return [];
+  }
+}
+
+export async function getMinistriesData(): Promise<MinistryData[]> {
+  try {
+    // const response = await api.get(`/church/landing/ministries`);
+    // return response.data;
+    
+    const data: MinistryData[] = [
+      {
+        id: 1,
+        icon: "Heart",
+        title: "Compassion Ministry",
+        description: "Reaching out to the less fortunate with love, care, and practical support for their daily needs.",
+        image: "/subdomain-images/community-charity-help.png",
+        color: "from-rose-500 to-pink-500",
+      },
+      {
+        id: 2,
+        icon: "Users",
+        title: "Family Ministry",
+        description: "Strengthening families through counseling, workshops, and activities that build lasting bonds.",
+        image: "/subdomain-images/happy-family-together-church.jpg",
+        color: "from-blue-500 to-cyan-500",
+      },
+      {
+        id: 3,
+        icon: "Globe",
+        title: "Missions & Outreach",
+        description: "Spreading the Gospel globally through mission trips, partnerships, and cross-cultural ministry.",
+        image: "/subdomain-images/mission-trip-global-outreach.jpg",
+        color: "from-emerald-500 to-teal-500",
+      },
+      {
+        id: 4,
+        icon: "BookHeart",
+        title: "Women's Ministry",
+        description: "Empowering women to discover their purpose and grow in faith through fellowship and mentorship.",
+        image: "/subdomain-images/women-fellowship-prayer-group.jpg",
+        color: "from-purple-500 to-violet-500",
+      },
+      {
+        id: 5,
+        icon: "Handshake",
+        title: "Men's Ministry",
+        description: "Building godly men through accountability, leadership development, and brotherhood.",
+        image: "/subdomain-images/men-fellowship-brotherhood.jpg",
+        color: "from-amber-500 to-orange-500",
+      },
+      {
+        id: 6,
+        icon: "GraduationCap",
+        title: "Education Ministry",
+        description: "Providing quality Christian education and training for all ages to grow in knowledge and wisdom.",
+        image: "/subdomain-images/christian-education-bible-study.jpg",
+        color: "from-indigo-500 to-blue-500",
+      },
+    ];
+    
+    return data;
+    
+  } catch (error: any) {
+    if (error.response?.status === 404) {
+      return [];
+    }
+
+    if (error.response?.status === 400) {
+      console.error("Invalid subdomain format:");
+      return [];
+    }
+
+    console.error("Error fetching ministries data:", error);
+    return [];
+  }
+}
+
+
+
+
+
+ 
 
 
 

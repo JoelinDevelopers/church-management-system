@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, BookOpen } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useQuery } from "@tanstack/react-query"
 import { getHeroCarouselData } from "@/lib/subdomain-landing"
-
+import { Skeleton } from "@/components/ui/skeleton"
 
 export default function HeroCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -37,13 +37,16 @@ export default function HeroCarousel() {
 
   if (isLoading) {
     return (
-      <section className="relative min-h-[600px] lg:min-h-[700px] flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img src="/church-worship-congregation-praising.jpg" alt="Church worship" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/50" />
-        </div>
-        <div className="container relative z-10 mx-auto px-4 flex items-center justify-center">
-          <div className="text-primary-foreground text-lg">Loading carousel...</div>
+      <section className="relative w-full min-h-[400px] md:min-h-[500px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0 bg-muted animate-pulse" />
+        <div className="container relative z-10 px-4 mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <Skeleton className="h-8 w-40 mx-auto mb-6 rounded-full" />
+            <div className="space-y-4">
+              <Skeleton className="h-8 w-3/4 mx-auto rounded-lg" />
+              <Skeleton className="h-6 w-40 mx-auto rounded-lg" />
+            </div>
+          </div>
         </div>
       </section>
     )
@@ -51,13 +54,21 @@ export default function HeroCarousel() {
 
   if (error) {
     return (
-      <section className="relative min-h-[600px] lg:min-h-[700px] flex items-center overflow-hidden">
+      <section className="relative w-full min-h-[400px] md:min-h-[500px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="/church-worship-congregation-praising.jpg" alt="Church worship" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/50" />
+          <img 
+            src="/subdomain-images/church-worship-congregation-praising.jpg" 
+            alt="Church worship" 
+            className="h-full w-full object-cover" 
+          />
+          <div className="absolute inset-0 bg-black/60" />
         </div>
-        <div className="container relative z-10 mx-auto px-4 flex items-center justify-center">
-          <div className="text-red-200 text-lg">Error loading carousel: {error.message}</div>
+        <div className="container relative z-10 px-4 mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="text-red-200 text-sm bg-red-900/30 backdrop-blur-sm px-4 py-3 rounded-lg inline-block">
+              Error loading carousel
+            </div>
+          </div>
         </div>
       </section>
     )
@@ -65,77 +76,98 @@ export default function HeroCarousel() {
 
   if (!carouselData || carouselData.length === 0) {
     return (
-      <section className="relative min-h-[600px] lg:min-h-[700px] flex items-center overflow-hidden">
+      <section className="relative w-full min-h-[400px] md:min-h-[500px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="/church-worship-congregation-praising.jpg" alt="Church worship" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/50" />
+          <img 
+            src="/subdomain-images/church-worship-congregation-praising.jpg" 
+            alt="Church worship" 
+            className="h-full w-full object-cover" 
+          />
+          <div className="absolute inset-0 bg-black/60" />
         </div>
-        <div className="container relative z-10 mx-auto px-4 flex items-center justify-center">
-          <div className="text-primary-foreground text-lg">No carousel data available</div>
+        <div className="container relative z-10 px-4 mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="text-white text-sm">No carousel data available</div>
+          </div>
         </div>
       </section>
     )
   }
 
   return (
-    <section className="relative min-h-[600px] lg:min-h-[700px] flex items-center overflow-hidden">
+    <section className="relative w-full min-h-[400px] md:min-h-[500px] flex items-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img src="/church-worship-congregation-praising.jpg" alt="Church worship" className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/50" />
+        <img 
+          src="/subdomain-images/church-worship-congregation-praising.jpg" 
+          alt="Church worship" 
+          className="h-full w-full object-cover" 
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-black/70" />
       </div>
 
       {/* Content */}
-      <div className="container relative z-10 mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-accent/20 px-4 py-2 text-accent-foreground backdrop-blur-sm">
-            <BookOpen className="h-5 w-5" />
-            <span className="text-sm font-medium">Daily Scripture</span>
+      <div className="container relative z-10 px-4 mx-auto w-full">
+        <div className="max-w-4xl mx-auto text-center w-full space-y-6 md:space-y-8">
+          {/* Badge - Moved up with better spacing */}
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-md px-4 py-2 text-white border border-white/20">
+            <BookOpen className="h-4 w-4" />
+            <span className="text-xs font-semibold">Daily Scripture</span>
           </div>
 
-          {/* Scripture Carousel */}
-          <div className="relative min-h-[280px] flex items-center justify-center">
+          {/* Scripture Carousel - Reduced height */}
+          <div className="relative min-h-[180px] md:min-h-[220px] flex items-center justify-center w-full">
             {carouselData.map((scripture, index) => (
               <div
                 key={index}
-                className={`absolute inset-0 transition-all duration-700 ${
+                className={`absolute inset-0 w-full transition-all duration-700 ease-in-out ${
                   index === currentIndex
                     ? "opacity-100 translate-x-0"
                     : index < currentIndex
-                      ? "opacity-0 -translate-x-full"
-                      : "opacity-0 translate-x-full"
+                      ? "opacity-0 -translate-x-8"
+                      : "opacity-0 translate-x-8"
                 }`}
               >
-                <div className="flex flex-col items-center justify-center h-full px-4">
-                  <p className="text-2xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 leading-relaxed text-balance">
-                    "{scripture.text}"
-                  </p>
-                  <p className="text-lg md:text-xl text-accent-foreground font-semibold">— {scripture.reference}</p>
+                <div className="flex flex-col items-center justify-center h-full px-4 sm:px-6 w-full space-y-4 md:space-y-6">
+                  {/* Scripture Text with quotation marks and different font */}
+                  <div className="relative w-full max-w-3xl">
+                    <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif italic text-white mb-4 leading-snug md:leading-normal text-balance drop-shadow-2xl">
+                      "{scripture.text}"
+                    </p>
+                  </div>
+                  
+                  {/* Scripture Reference with different font */}
+                  <div className="relative">
+                    <p className="text-base sm:text-lg md:text-xl text-white/90 font-sans font-medium bg-black/30 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/10">
+                      — {scripture.reference}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Navigation */}
-          <div className="flex items-center justify-center gap-4 mt-8">
+          {/* Navigation - Adjusted spacing */}
+          <div className="flex items-center justify-center gap-3 md:gap-4 mt-6 md:mt-6">
             <Button
               variant="outline"
               size="icon"
               onClick={goToPrevious}
-              className="h-12 w-12 rounded-full bg-background/20 backdrop-blur-sm border-primary-foreground/20 hover:bg-background/30 text-primary-foreground"
+              className="h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/20 backdrop-blur-md border-white/30 hover:bg-white/30 hover:border-white/50 text-white transition-all duration-200"
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-4 w-4 md:h-5 md:w-5" />
             </Button>
 
-            <div className="flex gap-2">
+            {/* Indicators */}
+            <div className="flex gap-1 md:gap-2">
               {carouselData.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`h-2 rounded-full transition-all ${
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
                     index === currentIndex
-                      ? "w-8 bg-accent"
-                      : "w-2 bg-primary-foreground/30 hover:bg-primary-foreground/50"
+                      ? "w-6 bg-white"
+                      : "w-1.5 bg-white/40 hover:bg-white/60"
                   }`}
                   aria-label={`Go to scripture ${index + 1}`}
                 />
@@ -146,9 +178,9 @@ export default function HeroCarousel() {
               variant="outline"
               size="icon"
               onClick={goToNext}
-              className="h-12 w-12 rounded-full bg-background/20 backdrop-blur-sm border-primary-foreground/20 hover:bg-background/30 text-primary-foreground"
+              className="h-9 w-9 md:h-10 md:w-10 rounded-full bg-white/20 backdrop-blur-md border-white/30 hover:bg-white/30 hover:border-white/50 text-white transition-all duration-200"
             >
-              <ChevronRight className="h-6 w-6" />
+              <ChevronRight className="h-4 w-4 md:h-5 md:w-5" />
             </Button>
           </div>
         </div>

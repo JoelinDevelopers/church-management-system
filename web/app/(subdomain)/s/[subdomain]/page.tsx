@@ -10,6 +10,8 @@ import Header from '../components/landing-page/Header';
 import Services from '../components/landing-page/Services';
 import Events from '../components/landing-page/Events';
 import ContactSection from '../components/landing-page/ContactSection';
+import WisdomSection from '../components/landing-page/WisdomSection';
+import { Ministries } from '../components/landing-page/Ministries';
 
 export async function generateMetadata({
   params
@@ -50,6 +52,8 @@ export default async function SubdomainPage({
       <HeroCarousel />
       <Services />
       <Events />
+      <Ministries />
+      <WisdomSection />
       <ContactSection />
     </div>
   )

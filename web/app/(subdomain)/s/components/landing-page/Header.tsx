@@ -135,6 +135,7 @@ export default function Header() {
                         {/* Action Buttons */}
                         <div className="flex items-center gap-3">
                             <Button 
+                                href='/auth/login'
                                 variant="outline" 
                                 size="default" 
                                 className="gap-2 border-2 h-10 px-4 bg-background hover:bg-accent transition-all duration-200 shadow-sm"

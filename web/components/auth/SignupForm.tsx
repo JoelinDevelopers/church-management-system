@@ -166,10 +166,6 @@ export default function RegisterForm() {
     }
   }
 
-  const handleLoginClick = () => {
-    router.push("/auth/login");
-  };
-
   const handleBackToHome = () => {
     router.push("/");
   };
@@ -468,7 +464,7 @@ export default function RegisterForm() {
                   type="button"
                   variant="link"
                   className="text-red-600 hover:text-red-500 p-0 h-auto font-semibold text-sm"
-                  onClick={handleLoginClick}
+                  href="/auth/login"
                 >
                   <LogIn className="h-4 w-4 mr-1" />
                   Sign in here

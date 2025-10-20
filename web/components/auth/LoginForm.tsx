@@ -397,7 +397,7 @@ export default function LoginForm() {
                   type="button"
                   variant="link"
                   className="text-red-600 hover:text-red-500 p-0 h-auto font-semibold text-sm"
-                  onClick={handleRegisterClick}
+                  href="/auth/register"
                 >
                   <UserPlus className="h-4 w-4 mr-1" />
                   Register here

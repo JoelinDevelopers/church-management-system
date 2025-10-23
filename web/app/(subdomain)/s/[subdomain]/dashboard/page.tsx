@@ -1,7 +1,8 @@
-import { ChartAreaInteractive } from "./components/chart-area-interactive";
-import { DataTable } from "./components/data-table";
-import { SectionCards } from "./components/section-cards";
+ 
+import { SectionCards } from "@/app/(dashboard)/components/section-cards";
 import data from "./data.json";
+import { ChartAreaInteractive } from "@/app/(dashboard)/components/chart-area-interactive";
+import { DataTable } from "@/components/data-table";
 export default function DashboardPage() {
   return (
     <div className="flex flex-1 flex-col">

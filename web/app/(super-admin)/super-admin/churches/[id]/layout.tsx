@@ -15,5 +15,5 @@ export default async function ChurchSuperAdminLayout({
             <SettingsNavigation churchId={id}/>
             {children}
         </div>
-    )
+    );
 }

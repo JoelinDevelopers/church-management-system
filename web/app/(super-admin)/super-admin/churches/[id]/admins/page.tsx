@@ -1,5 +1,7 @@
 import React from 'react'
-import AdminListing from '../../../components/AdminListing'
+import AdminListing from '../../../components/AdminListing';
+import { getChurchAdmins } from '@/lib/subdomains';
+ 
  
 
 export default async function page({
@@ -12,7 +14,10 @@ export default async function page({
   return (
     
     <div>
-      { <AdminListing churchId={id}/>}
+      { <AdminListing 
+         churchId={id} 
+         
+         />}
     </div>
   )
 }

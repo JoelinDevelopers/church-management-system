@@ -8,7 +8,9 @@ const router = createRouter()
 .openapi(routes.createChurch, handlers.createChurch)
 .openapi(routes.getChurchBySubDomain, handlers.getChurchBySubDomain)
 .openapi(routes.listChurches, handlers.listChurches)
-.openapi(routes.deleteChurch, handlers.deleteChurch);
+.openapi(routes.deleteChurch, handlers.deleteChurch)
+.openapi(routes.getChurchAdmins, handlers.getChurchAdmins)
+.openapi(routes.getChurchById, handlers.getChurchById);
 
 
 

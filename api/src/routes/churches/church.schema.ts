@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { nullableString } from "../(users)/users/users.schema";
 
 
 export const ChurchBaseSchema = z.object({
@@ -14,6 +15,20 @@ export const ChurchCreateSchema = ChurchBaseSchema.omit({
   createdAt: true,    
   updatedAt: true,  
 });
+
+export const ChurchAdminsSchema = z.array(z.object({
+
+    id: z.string(),
+    name: nullableString,
+    email: nullableString,
+    phone: nullableString,
+    image: nullableString,
+    role: z.string(),
+    status: z.string(),
+    createdAt: z.string()
+  
+})
+);
 
 export type ChurchCreateTypes = z.infer<typeof ChurchCreateSchema>;
 

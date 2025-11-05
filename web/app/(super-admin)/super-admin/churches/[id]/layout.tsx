@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import SettingsNavigation from '../../components/SettingsNavigation'
+import { getChurchById, getSubdomainData } from '@/lib/subdomains';
 
 export default async function ChurchSuperAdminLayout({
     children,
@@ -9,10 +10,11 @@ export default async function ChurchSuperAdminLayout({
             id: string;
         }>
     }) {
-        const { id } = await params
+        const { id } = await params;
+        const church = await getChurchById (id);
     return (
         <div>
-            <SettingsNavigation churchId={id}/>
+            <SettingsNavigation church={church} churchId={id}/>
             {children}
         </div>
     );

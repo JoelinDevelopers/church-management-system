@@ -1,7 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
-import { ChurchBaseSchema, ChurchCreateSchema } from "./church.schema";
+import { ChurchAdminsSchema, ChurchBaseSchema, ChurchCreateSchema } from "./church.schema";
 import { DomainParamSchema, ErrorResponseSchema, IdParamSchema, SuccessResponseSchema,  } from "@/lib/constants";
 
 
@@ -112,9 +112,61 @@ export const getChurchBySubDomain = createRoute({
   }
 });
 
+export const getChurchById = createRoute({
+  path: "/church/brief/{id}",
+  method: "get",
+  tags,
+  summary: "Get Church",
+  description: "Retrieve Church By ID",
+  request: {
+    params: IdParamSchema
+  },
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      ChurchCreateSchema,
+      "The Church"
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      ErrorResponseSchema,
+      "Church not found"
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      ErrorResponseSchema,
+      "Internal server error"
+    )
+  }
+});
+
+export const getChurchAdmins = createRoute({
+  path: "/church-admins/{id}",
+  method: "get",
+  tags,
+  summary: "Get Church Admins",
+  description: "Retrieve Church Admins By Church ID",
+  request: {
+    params: IdParamSchema
+  },
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      ChurchAdminsSchema,
+      "The church admins"
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      ErrorResponseSchema,
+      "Church not found"
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      ErrorResponseSchema,
+      "Internal server error"
+    )
+  }
+});
+
 
 
 export type CreateChurchRoute = typeof createChurch;
 export type ListChurchesRoute = typeof listChurches;
 export type DeleteChurchRoute = typeof deleteChurch;
-export type GetChurchBySubDomain = typeof getChurchBySubDomain;
+export type GetChurchBySubDomainRoute = typeof getChurchBySubDomain;
+export type getChurchByIdRoute = typeof getChurchById;
+export type getChurchAdminsRoute = typeof getChurchAdmins;

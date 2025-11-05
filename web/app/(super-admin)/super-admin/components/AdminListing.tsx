@@ -2,10 +2,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { UserPlus, Search, MoreVertical, Filter, Edit, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { UserPlus, Search, MoreVertical, Filter, Edit, Trash2, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
@@ -32,6 +33,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { ChurchAdmin, getChurchAdmins } from '@/lib/subdomains';
 
 export interface AdminUser {
   id: string;
@@ -44,33 +46,15 @@ export interface AdminUser {
   status: string;
 }
 
-// Mock data
-const mockAdmins: AdminUser[] = [
-  {
-    id: 'cmggy0w3d0002a8gx4rw33szr',
-    name: 'Lilian Ochuku',
-    email: 'workassets47@gmail.com',
-    phone: '0700915361',
-    image: '',
-    createdAt: '2025-10-07',
-    role: 'ADMIN',
-    status: 'Active'
-  },
-  {
-    id: 'cmgkse6qz00018feb8lqawuvv',
-    name: 'Nancy Obiero',
-    email: 'nancyobiero@gmail.com',
-    phone: '0700915564',
-    image: '',
-    createdAt: '2025-10-10',
-    role: 'ADMIN',
-    status: 'Active'
-  }
-];
+interface AdminListingProps {
+  churchId: string;
+  // getChurchAdmins: (churchId: string) => Promise<ChurchAdmin[]>;
+  deleteAdmin?: (adminId: string) => Promise<void>;
+}
 
-export default function AdminListing({churchId}: {churchId: string}) {
+export default function AdminListing({ churchId, deleteAdmin }: AdminListingProps) {
+  const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState('');
-  const [admins, setAdmins] = useState<AdminUser[]>(mockAdmins);
   const [roleFilter, setRoleFilter] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [showFilterMenu, setShowFilterMenu] = useState(false);
@@ -78,6 +62,33 @@ export default function AdminListing({churchId}: {churchId: string}) {
   const [adminToDelete, setAdminToDelete] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  // Fetch admins using React Query
+  const { data: admins = [], isLoading, isError, error } = useQuery({
+    queryKey: ['admins', churchId],
+    queryFn: () => getChurchAdmins(churchId),
+    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+  });
+
+  // Delete mutation
+  const deleteMutation = useMutation({
+    mutationFn: (adminId: string) => {
+      if (deleteAdmin) {
+        return deleteAdmin(adminId);
+      }
+      return Promise.reject(new Error('Delete function not provided'));
+    },
+    onSuccess: () => {
+      // Invalidate and refetch admins
+      queryClient.invalidateQueries({ queryKey: ['admins', churchId] });
+      setDeleteDialogOpen(false);
+      setAdminToDelete(null);
+    },
+    onError: (error) => {
+      console.error('Failed to delete admin:', error);
+      // You might want to show a toast notification here
+    },
+  });
 
   const filteredAdmins = admins.filter(admin => {
     const matchesSearch = 
@@ -109,9 +120,7 @@ export default function AdminListing({churchId}: {churchId: string}) {
 
   const handleDeleteConfirm = () => {
     if (adminToDelete) {
-      setAdmins(prev => prev.filter(admin => admin.id !== adminToDelete));
-      setDeleteDialogOpen(false);
-      setAdminToDelete(null);
+      deleteMutation.mutate(adminToDelete);
     }
   };
 
@@ -130,7 +139,7 @@ export default function AdminListing({churchId}: {churchId: string}) {
       .slice(0, 2);
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: Date | string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
       month: '2-digit', 
@@ -143,6 +152,47 @@ export default function AdminListing({churchId}: {churchId: string}) {
     roleFilter !== 'all' && `Role: ${roleFilter}`,
     statusFilter !== 'all' && `Status: ${statusFilter}`
   ].filter(Boolean);
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-6">
+        <div className="max-w-7xl mx-auto">
+          <Card className="border-0 shadow-sm">
+            <CardContent className="p-12 flex flex-col items-center justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-blue-600 mb-4" />
+              <p className="text-gray-600">Loading administrators...</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-6">
+        <div className="max-w-7xl mx-auto">
+          <Card className="border-0 shadow-sm">
+            <CardContent className="p-12 flex flex-col items-center justify-center">
+              <div className="text-red-600 mb-4">⚠️</div>
+              <p className="text-gray-900 font-medium mb-2">Failed to load administrators</p>
+              <p className="text-gray-600 text-sm mb-4">
+                {error instanceof Error ? error.message : 'An error occurred'}
+              </p>
+              <Button 
+                onClick={() => queryClient.invalidateQueries({ queryKey: ['admins', churchId] })}
+                variant="outline"
+              >
+                Try Again
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -378,6 +428,7 @@ export default function AdminListing({churchId}: {churchId: string}) {
                               <DropdownMenuItem 
                                 onClick={() => handleDeleteClick(admin.id)}
                                 className="cursor-pointer text-red-600 focus:text-red-600"
+                                disabled={deleteMutation.isPending}
                               >
                                 <Trash2 className="h-4 w-4 mr-2" />
                                 Delete Admin
@@ -450,12 +501,22 @@ export default function AdminListing({churchId}: {churchId: string}) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={deleteMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleDeleteConfirm}
               className="bg-red-600 hover:bg-red-700"
+              disabled={deleteMutation.isPending}
             >
-              Delete
+              {deleteMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                'Delete'
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

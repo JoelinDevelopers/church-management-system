@@ -92,7 +92,7 @@ const carouselImages: CarouselImage[] = [
   },
 ];
 
-export default function RegisterForm() {
+export default function RegisterForm({churchId}:{churchId?:string}) {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -140,6 +140,7 @@ export default function RegisterForm() {
         phone: data.phone,
         image: data.image || null,
         password: data.password,
+        churchId,
       });
 
       if (!result.success || !result.data) {
@@ -155,7 +156,7 @@ export default function RegisterForm() {
       });
 
       // Redirect to login or dashboard
-      router.push("/auth/login");
+      router.push("/super-admin/churches/${churchId}/admins");
     } catch (error) {
       console.error("Registration error:", error);
       toast.error("Registration Error", {

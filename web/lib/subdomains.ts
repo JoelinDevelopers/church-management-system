@@ -1,4 +1,5 @@
 import { api } from '@/config/axios';
+import { Role, Status } from '@/types/auth2';
 import { BaseChurchTypes, ChurchBrief } from '@/types/church.schema';
 
 
@@ -43,6 +44,59 @@ export async function getAllChurches():Promise<BaseChurchTypes []> {
 
      console.error("Error fetching subdomain data:", error);
       return [];
+  }
+}
+
+export async function getChurchAdmins(id:string):Promise<ChurchAdmin []> {
+  try {
+    const response = await api.get(`/church-admins/${id}`);
+     
+    return response.data;
+  } catch (error: any) {
+     if (error.response?.status === 404) {
+      return [];
+     }
+
+     if (error.response?.status === 400) {
+      console.error("Invalid subdomain format:");
+      return [];
+     }
+
+     console.error("Error fetching subdomain data:", error);
+      return [];
+  }
+}
+
+export type ChurchAdmin = {
+    id: string;
+    name: string;
+    createdAt: Date;
+    status: Status;
+    email: string;
+    phone: string;
+    image: string;
+    role: Role;
+}
+
+export async function getChurchById(
+  id: string
+):Promise<ChurchBrief | null> {
+  try {
+    const response = await api.get(`/church/brief/${id}`);
+     
+    return response.data;
+  } catch (error: any) {
+     if (error.response?.status === 404) {
+      return null;
+     }
+
+     if (error.response?.status === 400) {
+      console.error("Invalid subdomain format:", id);
+      return null;
+     }
+
+     console.error("Error fetching subdomain data:", error);
+      return null;
   }
 }
 

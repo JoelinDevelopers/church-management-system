@@ -12,7 +12,7 @@ const requiredString = (minLength = 1, fieldName = "Field") =>
     .min(minLength, `${fieldName} must be at least ${minLength} characters`);
 
 const optionalString = z.string().optional();
-const nullableString = z.string().nullable().optional();
+export const nullableString = z.string().nullable().optional();
 const cuidField = z.string().cuid();
 const emailField = z
   .string()
@@ -183,6 +183,7 @@ export const UserWithProfileSchema = BaseUserSchema.extend({
 // Create user input
 export const CreateUserSchema = z.object({
   surname: requiredString(2, "Surname"),
+  churchId:cuidField,
   otherNames: optionalString,
   name: optionalString,
   email: emailField,

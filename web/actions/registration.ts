@@ -12,6 +12,7 @@ interface CreateMemberWithProfileData {
   phone: string;
   image?: string | null;
   password: string;
+  churchId?: string;
 }
 
 interface UpdatePersonalInfoData {
@@ -49,17 +50,18 @@ export async function createMemberWithProfile(
       name: `${data.surname} ${data.otherNames.split(" ")[0]}`, // Combine names for the name field
       email: data.email,
       phone: data.phone,
-      role: "USER", // Set role as MEMBER
+      role: "ADMIN", // Set role as MEMBER
       image: data.image || null,
       password: data.password,
-      status: "PENDING", // Set status as PENDING for members
+      status: "ACTIVE",  
+      churchId: data.churchId
     };
 
-    console.log("Creating member with data:", registrationPayload);
+    // console.log("Creating member with data:", registrationPayload);
 
     // Make API call to create member
     const response = await axios.post(
-      `${API_BASE_URL}/api/members`,
+      `${API_BASE_URL}/api/users`,
       registrationPayload
     );
 
@@ -73,7 +75,7 @@ export async function createMemberWithProfile(
 
     // Revalidate relevant paths
     revalidatePath("/register");
-    revalidatePath("/dashboard/members");
+    revalidatePath("/super-admin/churches");
 
     return {
       success: true,

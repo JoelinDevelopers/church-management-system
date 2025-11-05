@@ -1,10 +1,13 @@
 import RegisterForm from '@/components/auth/SignupForm'
 import React from 'react'
 
-export default function page() {
+export default async function page({params} : {params:Promise<{
+  id:string
+}>}) {
+  const {id} = await params
   return (
     <div>
-        <RegisterForm />
+        <RegisterForm churchId={id}/>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import type { AppRouteHandler } from "@/lib/types";
 import { getPrisma } from "prisma/db";
-import { CreateChurchRoute, DeleteChurchRoute, GetChurchBySubDomain, ListChurchesRoute } from "./church.routes";
+import { CreateChurchRoute, DeleteChurchRoute, getChurchAdminsRoute, getChurchByIdRoute, GetChurchBySubDomainRoute, ListChurchesRoute } from "./church.routes";
 
 
 export const createChurch: AppRouteHandler<CreateChurchRoute> = async (c) => {
@@ -151,7 +151,7 @@ export const deleteChurch: AppRouteHandler<DeleteChurchRoute> = async (c) => {
   }
 };
 
-export const getChurchBySubDomain: AppRouteHandler<GetChurchBySubDomain> = async (c) => {
+export const getChurchBySubDomain: AppRouteHandler<GetChurchBySubDomainRoute> = async (c) => {
   const prisma = getPrisma(c.env.DATABASE_URL);
   const { subdomain } = c.req.valid("param");
 
@@ -178,6 +178,85 @@ export const getChurchBySubDomain: AppRouteHandler<GetChurchBySubDomain> = async
 
     return c.json(
       existingChurch,
+      HttpStatusCodes.OK
+    );
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    return c.json(
+      {
+        error: "Failed to delete church",
+      },
+      HttpStatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+export const getChurchById: AppRouteHandler<getChurchByIdRoute> = async (c) => {
+  const prisma = getPrisma(c.env.DATABASE_URL);
+  const {id} = c.req.valid("param");
+
+  try {
+    // Check if user exists
+    const existingChurch = await prisma.church.findUnique({
+      where: { id },
+      select: {
+        name: true,
+        subdomain: true
+      }
+    });
+
+    if (!existingChurch) {
+      return c.json(
+        {
+          error: "Church not found",
+        },
+        HttpStatusCodes.NOT_FOUND
+      );
+    }
+
+       
+
+    return c.json(
+      existingChurch,
+      HttpStatusCodes.OK
+    );
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    return c.json(
+      {
+        error: "Failed to delete church",
+      },
+      HttpStatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+export const getChurchAdmins: AppRouteHandler<getChurchAdminsRoute> = async (c) => {
+  const prisma = getPrisma(c.env.DATABASE_URL);
+  const {id} = c.req.valid("param");
+
+  try {
+    // Check if user exists
+    const users = await prisma.user.findMany({
+      where: {
+        churchId: id
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        image: true,
+        role: true,
+        status: true,
+        createdAt: true
+      }
+    });
+
+       
+
+    return c.json(
+      users,
       HttpStatusCodes.OK
     );
   } catch (error) {

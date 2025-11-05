@@ -1,10 +1,14 @@
 "use client";
 
+import { protocol, rootDomain } from "@/lib/utils";
+import { ChurchBrief } from "@/types/church.schema";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-export default function SettingsNavigation({ churchId }: { churchId: string }) {
+export default function SettingsNavigation({ churchId, church }: { 
+  churchId: string; 
+  church:ChurchBrief|null;}) {
   const pathname = usePathname();
 
   const tabs = [
@@ -18,10 +22,15 @@ export default function SettingsNavigation({ churchId }: { churchId: string }) {
   return (
     <div className="bg-white">
       {/* Header */}
-      <h1 className="text-2xl font-semibold text-gray-900 mb-4">Settings</h1>
+      {church && church.subdomain && (
+        <>
+          <h1 className="text-4xl font-semibold text-gray-900 mt-3">{church.name}</h1>
+          <Link href={`${protocol}://${church.subdomain}.${rootDomain}`}>{church.subdomain}</Link>
+        </>
+      )}
 
       {/* Tabs */}
-      <div className="border-b border-gray-200">
+      <div className="border-b border-gray-200 mt-2">
         <nav className="flex space-x-8" aria-label="Tabs">
           {tabs.map((tab) => {
             const isActive =

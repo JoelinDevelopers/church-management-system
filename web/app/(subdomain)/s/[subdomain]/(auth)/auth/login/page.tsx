@@ -4,16 +4,21 @@ import LoginForm from "@/components/auth/LoginForm";
 import { redirect } from "next/navigation";
 import React from "react";
 
-export default async function page() {
+export default async function page({params}:{params:Promise<{
+  subdomain:string
+}>}) {
+  const {subdomain} = await params;
   const user = await getServerUser();
   if (user?.id) {
-    const role = user.role;
-    const path = "/dashboard";
-    redirect(path);
+    if(subdomain){
+      redirect("/dashboard")
+    }else{
+      redirect("/super-admin")
+    }
   }
   return (
     <div>
-      <LoginForm />
+      <LoginForm subdomain={subdomain}/>
     </div>
   );
 }

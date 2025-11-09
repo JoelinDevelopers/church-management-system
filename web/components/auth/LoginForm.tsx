@@ -35,6 +35,7 @@ import { createLoginLog, loginUser } from "@/actions/auth";
 import { useDeviceInfo } from "@/hooks/useDeviceInfo";
 import { User } from "@/types/auth2";
 import MainLogo from "../home/main-logo";
+import { protocol, rootDomain } from "@/lib/utils";
 
 interface CarouselImage {
   url: string;
@@ -96,7 +97,7 @@ const validateIdentifier = (identifier: string): string | undefined => {
   }
 };
 
-export default function LoginForm() {
+export default function LoginForm({subdomain}:{subdomain?: string}) {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -184,11 +185,16 @@ export default function LoginForm() {
         console.error("Error creating login log:", logError);
       }
 
-      toast.success("Login Successful", {
-        description: `Welcome back, ${result.data.user.name}!`,
+       toast.success("Login Successful", {
+        description: `Welcome back, ${result.data.user.role}!`,
       });
 
-      handleUserRedirect(result.data.user);
+      if(subdomain){
+        router.push(`${protocol}://${subdomain}.${rootDomain}/dashboard`)
+      } else {
+         router.push("/super-admin");
+       
+      }
     } catch (error) {
       console.error("Login error:", error);
       toast.error("Login Error", {
@@ -199,9 +205,13 @@ export default function LoginForm() {
     }
   }
 
-  function handleUserRedirect(user: User) {
-    router.push("/dashboard");
-  }
+  // function handleUserRedirect(user: User) {
+  //  const role = user.role
+
+  //  if (role === "SUPER_ADMIN"){
+  //    router.push("/super-admin");
+  //  }
+  // }
 
   const handleForgotPassword = () => {
     router.push("/auth/forgot-password");

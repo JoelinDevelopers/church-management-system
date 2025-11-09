@@ -14,6 +14,7 @@ export interface User {
   isVerified: boolean;
   image: string | null;
   nin: string | null;
+  churchId: string | null;
   createdAt: string;
   updatedAt: string;
 }

@@ -4,9 +4,10 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import { Package, ChevronLeft, ChevronRight, LogOut } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { navItems } from "../config/sidebar";
 import { Role } from "@/types/auth2";
+import { logout } from "@/actions/auth";
 
 export default function Sidebar({role}:{role:Role}) {
   const [collapsed, setCollapsed] = useState(false);
@@ -22,6 +23,16 @@ export default function Sidebar({role}:{role:Role}) {
   const handleToggle = () => {
     setCollapsed(!collapsed);
   };
+  
+  const router = useRouter();
+  async function handleLogout() {
+    await logout();
+    if (role==="SUPER_ADMIN") {
+      router.push("/admin/login");
+    } else {
+      router.push("/auth/login");
+    }
+  }
 
   // Correct isActive logic to distinguish sub-paths
   const isActive = (path: string) => {
@@ -114,6 +125,7 @@ export default function Sidebar({role}:{role:Role}) {
       >
         <div className="space-y-2">
           <button
+          onClick={handleLogout}
             className={`group flex items-center text-sm ${
               collapsed ? "justify-center px-2" : "justify-start px-3"
             } w-full rounded-lg py-3 text-gray-200 transition-all duration-200 hover:border-red-400/40 hover:bg-red-500/20 hover:text-red-100`}

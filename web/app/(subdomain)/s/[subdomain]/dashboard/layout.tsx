@@ -3,7 +3,6 @@ import Navbar from "@/app/(super-admin)/super-admin/components/Navbar";
 import Sidebar from "@/app/(super-admin)/super-admin/components/Sidebar";
 import { redirect } from "next/navigation";
 import React, { ReactNode } from "react";
- 
 
 export default async function DashboardLayout({
   children,

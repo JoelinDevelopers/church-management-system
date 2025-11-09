@@ -35,18 +35,18 @@ export const navItems: ISidebarLink[] = [
     icon: <Building2 size={20} />,
     roles: ["SUPER_ADMIN"],
   },
-  {
-    name: "Shipments",
-    path: "/dashboard/shipments-trakit",
-    icon: <Package size={20} />,
-    roles: ["ADMIN", "STAFF", "AGENT"],
-  },
-  {
-    name: "Sea Freight",
-    path: "/dashboard/sea-freights",
-    icon: <Anchor size={20} />,
-    roles: ["ADMIN", "STAFF", "AGENT"],
-  },
+  // {
+  //   name: "Shipments",
+  //   path: "/dashboard/shipments-trakit",
+  //   icon: <Package size={20} />,
+  //   roles: ["ADMIN", "STAFF", "AGENT"],
+  // },
+  // {
+  //   name: "Sea Freight",
+  //   path: "/dashboard/sea-freights",
+  //   icon: <Anchor size={20} />,
+  //   roles: ["ADMIN", "STAFF", "AGENT"],
+  // },
   {
     name: "Users",
     path: "/dashboard/users",

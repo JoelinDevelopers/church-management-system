@@ -124,6 +124,8 @@ export async function loginUser(
       throw new Error("Invalid response format from server");
     }
 
+    
+
     // Create session FIRST
     const sessionResult = await createServerSession(loginData);
     if (!sessionResult.success) {

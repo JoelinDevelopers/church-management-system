@@ -11,7 +11,7 @@ export default async function DashboardLayout({
 }) {
   const user = await getServerUser();
     if (!user) {
-      redirect("/auth/login");
+      redirect("/admin/login");
     }
   return (
     <div className="flex min-h-screen">

@@ -23,10 +23,16 @@ export default function SettingsNavigation({ churchId, church }: {
     <div className="bg-white">
       {/* Header */}
       {church && church.subdomain && (
-        <>
+        <div className="mb-8">
           <h1 className="text-4xl font-semibold text-gray-900 mt-3">{church.name}</h1>
-          <Link href={`${protocol}://${church.subdomain}.${rootDomain}`}>{church.subdomain}</Link>
-        </>
+          <Link 
+          className="text-primary font-bold text-sm"
+          href={`${protocol}://${church.subdomain}.${rootDomain}`}
+          target="_blank"
+          >
+            {`${protocol}://${church.subdomain}.${rootDomain}`}
+          </Link>
+        </div>
       )}
 
       {/* Tabs */}

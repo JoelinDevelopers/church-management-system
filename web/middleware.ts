@@ -53,6 +53,11 @@ export async function middleware(request: NextRequest) {
     // For the root path on a subdomain, rewrite to the subdomain page
     if (pathname === '/') {
       return NextResponse.rewrite(new URL(`/s/${subdomain}`, request.url));
+    }else if(pathname === "/auth/login"){
+      return NextResponse.rewrite(new URL(`/s/${subdomain}/auth/login`, request.url));
+    }
+    else if(pathname === "/dashboard"){
+      return NextResponse.rewrite(new URL(`/s/${subdomain}/dashboard`, request.url));
     }
   }
 
